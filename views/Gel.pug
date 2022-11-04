@@ -1,0 +1,13 @@
+extends layout
+
+block content
+        h1= title
+        - var results = [{"Gel_Name": "Custom Styling", "Gel_Company": "Prose", "Gel_Size": 9.0, "Gel_Rating": 4.7},{"Gel_Name": "Crystal Ice", "Gel_Company": "Sally", "Gel_Size": 10.0, "Gel_Rating": 4.2},{"Gel_Name": "Small Round", "Gel_Company": "QLP", "Gel_Size": 11.0, "Gel_Rating": 4.6}]
+        div.container-fluid
+            div.row
+                each item, index in results
+                    div.col-sm-2(onclick=`buy(${index})`) Gel Name: #{item["Gel_Name"]} <br> Gel Company: #{item["Gel_Company"]} <br> Gel Size: #{item["Gel_Size"]} <br> Gel Rating: #{item["Gel_Rating"]}
+            script.
+              function buy(index) {
+                    alert("You purchased item " + index)
+                }                    
