@@ -4,8 +4,15 @@ exports.Gel_list = function(req, res) {
     res.send('NOT IMPLEMENTED: Gel list');
 };
 // for a specific gel
-exports.Gel_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: Gel detail: ' + req.params.id);
+exports.Gel_detail = async function(req, res) {
+    console.log("detail"  + req.params.id)
+    try {
+        result = await Gel.findById( req.params.id)
+        res.send(result)
+    } catch (error) {
+        res.status(500)
+        res.send(`{"error": document for id ${req.params.id} not found`);
+    }
 };
 // Handle egl create on POST.
 exports.Gel_create_post = async function(req, res) {
@@ -41,6 +48,27 @@ exports.Gel_list = async function(req, res) {
         res.status(500);
         res.send(`{"error": ${err}}`);
     }  
+};
+// Handle Gel update form on PUT.
+exports.Gel_update_put = async function(req, res) {
+    console.log(`update on id ${req.params.id} with body
+${JSON.stringify(req.body)}`)
+    try {
+        let toUpdate = await Gel.findById( req.params.id)
+        // Do updates of properties
+        if(req.body.Gel_Name)
+               toUpdate.Gel_Name = req.body.Gel_Name;
+        if(req.body.Company) toUpdate.Company = req.body.Company;       
+        if(req.body.Size) toUpdate.Size = req.body.Size;
+        if(req.body.Rating) toUpdate.Rating = req.body.Rating;
+        let result = await toUpdate.save();
+        console.log("Sucess " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id}
+failed`);
+    }
 };
 // VIEWS
 // Handle a Gel all view

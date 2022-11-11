@@ -18,3 +18,7 @@ router.get('/Gel/:id', Gel_controller.Gel_detail);
 // GET request for list of all Gel items.
 router.get('/Gel', Gel_controller.Gel_list);
 module.exports = router;
+
+// GET request for one Gel.
+
+router.get('/Gel/:id', Gel_controller.Gel_detail);
