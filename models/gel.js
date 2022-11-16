@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const gelSchema = mongoose.Schema({
     Gel_Name: String,
     Gel_Company: String,
-    Gel_cost: Number,
+    Gel_Size: Number,
     Gel_Rating: Number
 })
 
