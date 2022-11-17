@@ -82,3 +82,75 @@ exports.Gel_view_all_Page = async function(req, res) {
         res.send(`{"error": ${err}}`);
     }  
 };
+
+// Handle Gel delete on DELETE.
+
+exports.Gel_delete = async function(req, res) {
+
+    console.log("delete " + req.params.id)
+    try {
+    result = await Gel.findByIdAndDelete( req.params.id)
+    console.log("Removed " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": Error deleting ${err}}`);
+    }
+   };
+
+
+   // Handle a show one view with id specified by query
+exports.Gel_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+    result = await Gel.findById( req.query.id)
+    res.render('Geldetail', 
+   { title: 'Gel Detail', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+   };
+
+    // Handle building the view for creating a Gel.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.Gel_create_Page = function(req, res) {
+    console.log("create view")
+    try{
+    res.render('Gelcreate', { title: 'Gel Create'});
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+   };
+
+   // query provides the id
+
+exports.Gel_update_Page = async function(req, res) {
+    console.log("update view for item "+req.query.id)
+    try{
+    let result = await Gel.findById(req.query.id)
+    res.render('Gelupdate', { title: 'Gel Update', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+   };
+
+   // Handle a delete one view with id from query
+exports.Gel_delete_Page = async function(req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try{
+    result = await Gel.findById(req.query.id)
+    res.render('Geldelete', { title: 'Gel Delete', toShow:
+   result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+   }

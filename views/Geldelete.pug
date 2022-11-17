@@ -1,0 +1,53 @@
+extends layout 
+block content 
+  h1= title 
+  if (toShow == null) 
+    h2 No instance to delete 
+  else 
+    - let Gelid = toShow._id 
+    - let Gel_Name = toShow.Gel_Name
+    - let Gel_Company = toShow.Gel_Company
+    - let Gel_Size = toShow.Gel_Size
+    - let Gel_Rating = toShow.Gel_Rating 
+    - let actionid = "/resource/Gel/" + Gelid 
+    script let actionid = "#{actionid}" 
+    div 
+      div.row 
+        div(class='GelAttr mr-3') Gel ID is: 
+        div #{Gelid} 
+      div.row 
+        div(class='GelAttr mr-3') Gel Name is: 
+        div #{Gel_Name} 
+      div.row 
+        div(class='GelAttr mr-3') Gel Company is: 
+        div #{Gel_Company} 
+      div.row 
+        div(class='GelAttr mr-3') Gel Size is: 
+        div #{Gel_Size}
+      div.row 
+        div(class='GelAttr mr-3') Gel Rating is: 
+        div #{Gel_Rating}     
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete 
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel 
+  script. 
+    function cancel() { 
+      // Go back to the home page for the Gel collection 
+      window.location.href='/Gel' 
+    } 
+  script. 
+    function deleteOnid() { 
+      console.log("starting delete") 
+      // delete first 
+      fetch(actionid, { 
+        method: 'DELETE'   
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Delete succeded") 
+        window.location.href='/Cap' 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Delete failed " + error ) 
+      }); 
+    }

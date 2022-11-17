@@ -1,0 +1,35 @@
+extends layout 
+block content 
+  h1= title 
+  form(id='GelForm', action="/resource/Gel", method="POST" ,class='d')
+    div(class='d').form-group
+    div.form-group 
+        label.GelAttr(for='Gel_Name') Gel Name 
+        input#Gel_Name(type='text', name='Gel_Name') 
+    div.form-group 
+        label.GelAttr(for='Gel_Company') Gel Company 
+        input#Gel_Company(type='text', name='Gel_Company') 
+    div.form-group 
+        label.GelAttr(for='Gel_Size') Gel Size 
+        input#Gel_Size(type='number', name='Gel_Size')
+    div.form-group 
+        label.GelAttr(for='Gel_Rating') Gel Rating 
+        input#Gel_Rating(type='number', name='Gel_Rating')     
+    input(type="submit") 
+  script. 
+    document.forms['GelForm'].addEventListener('submit', (event) => { 
+      event.preventDefault(); 
+      // TODO do something here to show user that form is being submitted 
+      fetch(event.target.action, { 
+        method: 'POST', 
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Save succeded") 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Save failed " + error ) 
+      }); 
+    });
