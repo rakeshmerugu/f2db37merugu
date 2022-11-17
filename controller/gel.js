@@ -104,8 +104,8 @@ exports.Gel_view_one_Page = async function(req, res) {
     console.log("single view for id " + req.query.id)
     try{
     result = await Gel.findById( req.query.id)
-    res.render('Geldetail', 
-   { title: 'Gel Detail', toShow: result });
+    res.render('GelDetails',    // update
+   { title: 'Gel Detail', toShow: result }); //Update
     }
     catch(err){
     res.status(500)
@@ -117,7 +117,7 @@ exports.Gel_view_one_Page = async function(req, res) {
 // No body, no in path parameter, no query.
 // Does not need to be async
 exports.Gel_create_Page = function(req, res) {
-    console.log("create view")
+    console.log("create view")npm startSession
     try{
     res.render('Gelcreate', { title: 'Gel Create'});
     }
