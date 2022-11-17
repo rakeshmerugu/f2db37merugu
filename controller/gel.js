@@ -117,7 +117,7 @@ exports.Gel_view_one_Page = async function(req, res) {
 // No body, no in path parameter, no query.
 // Does not need to be async
 exports.Gel_create_Page = function(req, res) {
-    console.log("create view")npm startSession
+    console.log("create view")
     try{
     res.render('Gelcreate', { title: 'Gel Create'});
     }
