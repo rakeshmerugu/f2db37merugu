@@ -1,21 +1,35 @@
 extends layout
 
 block content
-  h1= title
-  - let result=results
-  div(class="container-fluid")
-     div(class='row m-1')
-        each item,index in result
-            -let destination = `dispatch(\"/Gel/update?id=${item._id}\")`
-            div.col-sm-2(onclick=`buy(${index})`) Gel Name: #{item["Gel_Name"]} <br> Gel Company: #{item["Gel_Company"]} <br> Gel Size: #{item["Gel_Size"]} <br> Gel Rating: #{item["Gel_Rating"]}
-                button.btn(class="btn-primary ml-1", onclick = destination) Update
-
-  script.
-      function buy(index){
-         alert("you purchased item "+(index+1))
+    h1= title
+    button.btn(class="btn-primary btn-sm ml-1", style="margin: 6px; width: 130px;", onclick=`dispatch(\"/Gel/create\")`) Create
+    - var results = results
+    div(class="container-fluid") 
+    div(class="row m-1") 
+      each item in results  
+        - let destination = `dispatch(\"/Gel/update?id=${item._id}\")` 
+        div(class="row-sm-2", class="m-1") Item #{item.Gel_Name} #{item.Gel_Company}(#{item.Gel_Rating}) is #{item.Gel_cost} 
+          button.btn( class="btn-primary ml-1", onclick= destination) Update 
+          button.btn(class="btn-success btn-sm ml-1", style="margin: 6px; width: 130px;", onclick=`dispatch(\"/Gel/detail?id=${item._id}\")`) View
+          button.btn(class="btn-warning btn-sm ml-1", style="margin: 6px; width: 130px;", onclick= `dispatch(\"/Gel/update?id=${item._id}\")`) Update
+          button.btn(class="btn-danger btn-sm ml-1", style="margin: 6px; width: 130px;", onclick= `dispatch(\"/Gel/delete?id=${item._id}\")`) Delete 
+   
+    script. 
+      function buy(index) {
+      alert("You purchased item " + index);
       }
-
-  script.
-      function dispatch(path){
-      window.location.href=path
-      }                   
+      function dispatch(path){ 
+        window.location.href=path 
+      } 
+      passport.use(new LocalStrategy(function(username, password, done) { 
+            Account.findOne({ username: username }, function (err, user) { 
+            if (err) { return done(err); } 
+            if (!user) { 
+                return done(null, false, { message: 'Incorrect username.' }); 
+            }
+            if (!user.validPassword(password)) { 
+                return done(null, false, { message: 'Incorrect password.' }); 
+            }
+            return done(null, user); 
+          }); 
+      }));               
